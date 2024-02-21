@@ -10,8 +10,7 @@ import com.sparta.myselectshop.kakao.KakaoService;
 import com.sparta.myselectshop.security.UserDetailsImpl;
 import com.sparta.myselectshop.service.FolderService;
 import com.sparta.myselectshop.service.UserService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+
 import java.util.List;
 
 @Slf4j
@@ -78,17 +76,5 @@ public class UserController {
         model.addAttribute("folders", folderService.getFolders(userDetails.getUser()));
 
         return "index :: #fragment";
-    }
-    @GetMapping("/user/kakao/callback")
-    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException, UnsupportedEncodingException {
-        String token = kakaoService.kakaoLogin(code); //jwt
-        //token에 베어럴하고 띄어쓰기 있어 오류 그래서 인코딩해줌
-        String encode = URLEncoder.encode(token, "utf-8");
-
-        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, encode);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        return "redirect:/";
     }
 }
