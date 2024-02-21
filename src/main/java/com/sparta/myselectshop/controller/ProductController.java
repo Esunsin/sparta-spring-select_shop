@@ -25,11 +25,12 @@ public class ProductController {
     //관심상품 등록
     @PostMapping("/products")
     public ProductResponseDto creatProduct(@RequestBody ProductRequestDto productRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return productService.createProduct(productRequestDto,userDetails.getUser());
+        return productService.createProduct(productRequestDto, userDetails.getUser());
     }
+
     //관심상품 희망 최저가 등록하기
     @PostMapping("/products/{id}")
-    public ProductResponseDto updateProduct(@PathVariable(name = "id") Long id, @RequestBody ProductMypriceRequestDto productMypriceRequestDto){
+    public ProductResponseDto updateProduct(@PathVariable(name = "id") Long id, @RequestBody ProductMypriceRequestDto productMypriceRequestDto) {
         return productService.updateProduct(id, productMypriceRequestDto);
     }
 
@@ -41,7 +42,16 @@ public class ProductController {
             @RequestParam("size") int size,
             @RequestParam("sortBy") String sortBy,
             @RequestParam("isAsc") boolean isAsc,
-            @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return productService.getProducts(userDetails.getUser(),page-1,size,sortBy,isAsc);
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return productService.getProducts(userDetails.getUser(), page - 1, size, sortBy, isAsc);
+    }
+
+    @PostMapping("/products/{productId}/folder")
+    public void addFolder(
+            @PathVariable Long productId,
+            @RequestParam Long folderId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        productService.addFolder(productId, folderId, userDetails.getUser());
     }
 }
