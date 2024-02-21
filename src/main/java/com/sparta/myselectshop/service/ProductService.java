@@ -1,5 +1,6 @@
 package com.sparta.myselectshop.service;
 
+import com.sparta.myselectshop.dto.ItemDto;
 import com.sparta.myselectshop.dto.ProductMypriceRequestDto;
 import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
@@ -31,5 +32,10 @@ public class ProductService {
         Product product = productRepository.findById(productId).orElseThrow(() -> new NullPointerException("해당상품을 찾을 수 없습니다"));
         product.update(productMypriceRequestDto);
         return new ProductResponseDto(product);
+    }
+
+    public void updateBySearch(Long productId, ItemDto itemDto) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new NullPointerException("해당상품이 없습니다."));
+        product.updateByItemDto(itemDto);
     }
 }
