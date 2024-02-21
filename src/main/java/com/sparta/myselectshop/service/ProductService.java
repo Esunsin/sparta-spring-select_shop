@@ -97,4 +97,17 @@ public class ProductService {
         //상품을 폴더에 추가
         productFolderRepository.save(new ProductFolder(product, folder));
     }
+
+    public Page<ProductResponseDto> getProductsInFolder(Long folderId, int page, int size, String sortBy, boolean isAsc, User user) {
+        //페이징 처리
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        //해당폴더에 등록된 상품을 가져옵니다.
+        Page<Product> products = productRepository.findAllByUserAndProductFolders_FolderId(user, folderId, pageable);
+
+        Page<ProductResponseDto> responseDtoList = products.map(ProductResponseDto::new);
+        return responseDtoList;
+    }
 }
