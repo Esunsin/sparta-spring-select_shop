@@ -27,8 +27,9 @@ public class ProductService {
     public static final int MIN_MY_PRICE = 100;
 
     private final ProductRepository productRepository;
-    private final FolderRepository folderRepository;
     private final ProductFolderRepository productFolderRepository;
+    private final FolderRepository folderRepository;
+
 
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto, User user){
         Product saved = productRepository.save(new Product(productRequestDto,user));
