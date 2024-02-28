@@ -55,6 +55,7 @@ class ProductServiceIntegrationTest {
         assertEquals(lPrice, product.getLprice());
         assertEquals(0, product.getMyprice());
         createdProduct = product;
+
     }
 
     @Test

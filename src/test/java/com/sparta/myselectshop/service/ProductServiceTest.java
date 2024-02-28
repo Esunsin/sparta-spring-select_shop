@@ -36,7 +36,7 @@ class ProductServiceTest {
     @DisplayName("관심 상품 희망가 - 최저가 이상으로 변경")
     void test1() {
         // given
-        Long productId = 100L;
+        Long productId = (Long) 100L;
         int myprice = ProductService.MIN_MY_PRICE + 3_000_000;
 
         ProductMypriceRequestDto requestMyPriceDto = new ProductMypriceRequestDto();
@@ -51,11 +51,10 @@ class ProductServiceTest {
         );
 
         Product product = new Product(requestProductDto, user);
-
         ProductService productService = new ProductService(productRepository, productFolderRepository, folderRepository);
 
         given(productRepository.findById(productId)).willReturn(Optional.of(product));
-        
+
         // when
         ProductResponseDto result = productService.updateProduct(productId, requestMyPriceDto);
 
@@ -67,7 +66,7 @@ class ProductServiceTest {
     @DisplayName("관심 상품 희망가 - 최저가 미만으로 변경")
     void test2() {
         // given
-        Long productId = 200L;
+        Long productId = (Long) 200L;
         int myprice = ProductService.MIN_MY_PRICE - 50;
 
         ProductMypriceRequestDto requestMyPriceDto = new ProductMypriceRequestDto();
